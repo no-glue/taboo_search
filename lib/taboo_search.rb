@@ -57,7 +57,7 @@ module TabooSearch
     def candidate(best, taboo_list, cities)
       shake, edges = nil, nil
       begin
-        shake, edges = two_opt(best[:vector])
+        shake = edges = two_opt(best[:vector])
       end while is_taboo?(shake, edges)
       candidate = {:vector => shake}
       candidate[:cost] = cost(candidate[:vector], cities)
