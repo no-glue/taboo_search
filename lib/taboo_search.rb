@@ -47,7 +47,7 @@ module TabooSearch
       shake.each_with_index do |c1, i|
         c2 = (i == (shake.size - 1)) ? shake[0] : shake[i + 1]
         taboo_list.each do |forbidden_edge|
-          true if forbidden_edge == [c1, c2]
+          return true if forbidden_edge == [c1, c2]
         end
       end
       false
@@ -58,10 +58,10 @@ module TabooSearch
       shake, edges = nil, nil
       begin
         shake, edges = two_opt(best[:vector])
-      end while is_taboo?(shake, taboo_list)
+      end while is_taboo?(shake, edges)
       candidate = {:vector => shake}
       candidate[:cost] = cost(candidate[:vector], cities)
-      candidate, edges
+      return candidate, edges
     end
 
     # search
