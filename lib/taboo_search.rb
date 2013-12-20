@@ -39,7 +39,7 @@ module TabooSearch
       c1, c2 = c2, c1 if c2 < c1
       # +++ reverses in range
       perm[c1...c2] = perm[c1...c2].reverse
-      perm
+      return perm, [[shake[c1 - 1], shake[c1]], [shake[c2 - 1], shake[c2]]]
     end
 
     # is taboo
@@ -57,8 +57,8 @@ module TabooSearch
     def candidate(best, taboo_list, cities)
       shake, edges = nil, nil
       begin
-        shake = edges = two_opt(best[:vector])
-      end while is_taboo?(shake, edges)
+        shake, edges = two_opt(best[:vector])
+      end while is_taboo?(shake, taboo_list)
       candidate = {:vector => shake}
       candidate[:cost] = cost(candidate[:vector], cities)
       return candidate, edges
